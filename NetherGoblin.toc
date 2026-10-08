@@ -1,0 +1,56 @@
+## Interface: 16001
+## Title: |cffe8c46aNether|r|cff8fd14fGoblin|r
+## Notes: An auction house goblin: fast, smooth scans, prices on every tooltip, a 14-day trend for every item, undercut alerts, shopping lists, and guild or party price checks with @ or $. Optimize your auctions. In gold we trust!
+## Author: NetherUI
+## Version: 1.4.0
+## Category: Auction House
+## Group: NetherUI
+## IconTexture: Interface\AddOns\NetherGoblin\Media\Icon
+## AddonCompartmentFunc: NetherGoblin_OnAddonCompartmentClick
+## OptionalDeps: NetherUI, NetherUI_Media, NetherSuite
+## SavedVariables: NetherGoblinDB
+## SavedVariablesPerCharacter: NetherGoblinCharDB
+## X-License: All Rights Reserved
+## X-NetherSuite: 1
+## X-Nether-Family: 1
+## X-Nether-Order: 80
+## X-Nether-Description: An auction house goblin: fast scans, prices on every tooltip, 14-day trends, undercut alerts, shopping lists and guild price checks.
+
+# ------------------------------------------------------------------------------------------
+# 16001 = WoW: Forever 1.60.x. Docs/ARCHITECTURE.md maps the modules; Docs/API.md is the
+# plugin API; Docs/PROTOCOL.md the price-check messages.
+# ------------------------------------------------------------------------------------------
+
+Core\Init.lua
+Core\Locale.lua
+Locales\enUS.lua
+Core\Settings.lua
+Core\Money.lua
+Core\Scheduler.lua
+Data\Geometry.lua
+Data\Prices.lua
+Data\Ledger.lua
+AH\House.lua
+AH\Search.lua
+AH\Scan.lua
+AH\Buy.lua
+AH\Sell.lua
+AH\Owned.lua
+UI\Skin.lua
+UI\Widgets.lua
+UI\Chart.lua
+UI\Window.lua
+UI\Inspector.lua
+UI\TabBuy.lua
+UI\TabSell.lua
+UI\TabAuctions.lua
+UI\TabShopping.lua
+UI\Popups.lua
+UI\Config.lua
+Features\Tooltip.lua
+Features\PriceCheck.lua
+Features\Compat.lua
+Features\Minimap.lua
+Features\Suite.lua
+API\Plugin.lua
+Core\Lifecycle.lua
