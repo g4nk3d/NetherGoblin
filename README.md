@@ -1,6 +1,6 @@
 # NetherGoblin
 
-Version 1.4.0 - Interface 16001 (WoW: Forever 1.60.x) - All Rights Reserved (see LICENSE.txt)
+Version 1.4.3 - Interface 16001 (WoW: Forever 1.60.x) - All Rights Reserved (see LICENSE.txt)
 
 Optimize your auctions. In gold we trust!
 

@@ -93,6 +93,8 @@ end)
 
 Page("trade", L["Buying & selling"], function(p)
 	local add = Stack(p)
+	Check(add, p, "search.shiftClick", L["Shift+click an item to put its name in the search"], L["Bags, chat links, the character sheet: with the auction window open and no chat box open."])
+	Check(add, p, "search.shiftClickGo", L["...and search for it at once"], L["Off: the name waits in the search box for you to press Enter."])
 	add(W:Choice(p, L["Undercut by"], { { "copper", L["Copper"] }, { "percent", L["Percent"] } }, function() return S("sell.undercutMode") end, function(v) Set("sell.undercutMode", v) end))
 	add(W:Slider(p, L["Copper"], 0, 100, 1, function() return S("sell.undercutCopper") end, function(v) Set("sell.undercutCopper", v) end, function(v) return v .. "c" end))
 	add(W:Slider(p, L["Percent"], 0, 20, 1, function() return S("sell.undercutPercent") end, function(v) Set("sell.undercutPercent", v) end, function(v) return v .. "%" end))
@@ -320,7 +322,7 @@ end)
 ---------------------------------------------------------------------------------------------
 _G.SLASH_NETHERGOBLIN1 = "/goblin"
 _G.SLASH_NETHERGOBLIN2 = "/ng"
-_G.SlashCmdList = _G.SlashCmdList or {}
+-- (never assign SlashCmdList itself: writing that global taints every slash command, /pvp included)
 SlashCmdList.NETHERGOBLIN = function(msg)
 	msg = (msg or ""):lower():gsub("^%s+", ""):gsub("%s+$", "")
 	if msg == "" or msg == "config" or msg == "settings" then Config:Toggle()

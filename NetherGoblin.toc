@@ -2,7 +2,7 @@
 ## Title: |cffe8c46aNether|r|cff8fd14fGoblin|r
 ## Notes: An auction house goblin: fast, smooth scans, prices on every tooltip, a 14-day trend for every item, undercut alerts, shopping lists, and guild or party price checks with @ or $. Optimize your auctions. In gold we trust!
 ## Author: NetherUI
-## Version: 1.4.0
+## Version: 1.4.3
 ## Category: Auction House
 ## Group: NetherUI
 ## IconTexture: Interface\AddOns\NetherGoblin\Media\Icon
@@ -49,6 +49,7 @@ UI\Popups.lua
 UI\Config.lua
 Features\Tooltip.lua
 Features\PriceCheck.lua
+Features\LinkSearch.lua
 Features\Compat.lua
 Features\Minimap.lua
 Features\Suite.lua

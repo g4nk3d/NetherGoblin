@@ -1,5 +1,41 @@
 # NetherGoblin changelog
 
+## 1.4.3 - Quantity box like the game's
+
+A /reload is enough after updating.
+
+### Changed
+- **The Quantity box works like the game's own auction house.** The first click selects the
+  number, so typing 25 replaces the 1; a second click places the cursor (to type 16, say).
+  Backspace can now empty the box while you type, and when you click away with it empty or at
+  0, the quantity comes back on its own. The total follows every number you type.
+
+## 1.4.2 - Hotfix: blocked slash commands
+
+A /reload is enough after updating.
+
+### Fixed
+- **Hotfix: "NetherGoblin has been blocked from an action only available to the Blizzard UI"**
+  when typing a game slash command such as /pvp. NetherGoblin set up its own commands (/goblin,
+  /ng) in a way that marked the game's whole slash command list as changed by an addon, so the
+  game blocked protected commands and blamed NetherGoblin. It now adds its commands without
+  touching the list itself.
+
+## 1.4.1 - Shift+click to search
+
+Restart the game fully after updating (this version adds a new file); a /reload is not enough.
+
+### Fixed
+- **Shift+clicking an item with the auction window open did nothing.** Shift+click an item in
+  your bags, a chat link or your character sheet and its name goes into the Buy tab's search
+  and the search runs, as in the game's own auction window. On the Shopping tab the name goes
+  into "Add an item name..." instead, ready for Enter. A chat box that is open still gets the
+  link as before, and another addon's text box with the cursor is left alone.
+
+### Added
+- Settings > Buying & selling: "Shift+click an item to put its name in the search" and
+  "...and search for it at once" (off: the name waits in the box for Enter). Both on by default.
+
 ## 1.4.0 - The full NetherUI theme
 
 A /reload is enough after updating.

@@ -20,7 +20,7 @@ local ADDON, ns = ...
 local NG = { name = ADDON, modules = {} }
 ns.NG = NG
 
-NG.VERSION = "1.4.0"
+NG.VERSION = "1.4.3"
 NG.MEDIA = "Interface\\AddOns\\NetherGoblin\\Media\\"
 NG.FONT_BODY = NG.MEDIA .. "Fonts\\Philosopher-Bold.ttf"
 NG.FONT_TITLE = NG.MEDIA .. "Fonts\\Cinzel-Bold.ttf"

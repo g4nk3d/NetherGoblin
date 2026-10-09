@@ -34,6 +34,8 @@ Settings.DEFAULTS = {
 	["popup.sound"] = true,
 	["popup.quips"] = true,
 	-- buying
+	["search.shiftClick"] = true,        -- Shift+click an item: its name in our search (as in the game's window)
+	["search.shiftClickGo"] = true,      -- ...and the search runs at once
 	["buy.confirmJump"] = 10,            -- warn when the price rose more than this % since the list
 	-- selling
 	["sell.undercutMode"] = "copper",    -- "copper" | "percent"

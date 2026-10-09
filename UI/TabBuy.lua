@@ -66,6 +66,8 @@ local function Filters()
 	return out
 end
 
+function Buy:SearchBox() return c and c.search end
+
 function Buy:Search(text)
 	if text ~= nil then c.search:SetText(text) end
 	text = c.search:GetText()

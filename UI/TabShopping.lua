@@ -101,6 +101,8 @@ function TS:Build(c)
 	self:Sync()
 end
 
+function TS:AddBox() return cs and cs.add end
+
 function TS:AddItem()
 	local t = cs.add:GetText()
 	if t == "" then return end

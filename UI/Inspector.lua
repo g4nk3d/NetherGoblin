@@ -114,9 +114,24 @@ function Inspector:Build(parent, x, y, w, h)
 	f.qtyLabel = ql
 	local minus = W:Button(box, "-", 38, 40, { size = 22 })
 	minus:SetPoint("TOPLEFT", 100, -12)
+	-- typing: an empty box (Backspace) or a 0 is allowed while it has the cursor; the totals
+	-- follow every number typed, and the box shows the quantity again when the cursor leaves
 	local qe = W:Edit(box, 80, 40, "", { numeric = true, maxLetters = 5, justify = "CENTER", size = 22,
-		onChange = function(text, user) if user and cur then cur.qty = max(1, tonumber(text) or 1) Inspector:QtyChanged() end end })
+		onChange = function(text, user)
+			if not (user and cur) then return end
+			local n = tonumber(text)
+			if n and n >= 1 then cur.qty = n Inspector:QtyChanged() end
+		end })
 	qe:SetPoint("LEFT", minus, "RIGHT", 8, 0)
+	-- the first click selects the number, so typing replaces it; a click while it already has
+	-- the cursor just places the cursor (the box's own behaviour)
+	qe.edit:HookScript("OnEditFocusGained", function(self)
+		C_Timer.After(0, function() if self:HasFocus() then self:HighlightText() end end)
+	end)
+	qe.edit:HookScript("OnEditFocusLost", function(self)
+		self:HighlightText(0, 0)
+		if cur then qe:SetText(tostring(max(1, cur.qty or 1))) end
+	end)
 	local plus = W:Button(box, "+", 38, 40, { size = 22 })
 	plus:SetPoint("LEFT", qe, "RIGHT", 8, 0)
 	local maxb = W:Button(box, L["Max"], bw - 12 - 100 - 180 - 4, 40, { size = 19 })
@@ -235,7 +250,8 @@ function Inspector:Totals()
 	f.cancel:SetShown(quote ~= nil)
 	if cur.commodity then
 		cur.qty = max(1, cur.qty or 1)
-		f.qtyEdit:SetText(tostring(cur.qty))
+		-- while the player is typing in it, the box keeps what they typed (even empty)
+		if not (f.qtyEdit.edit.HasFocus and f.qtyEdit.edit:HasFocus()) then f.qtyEdit:SetText(tostring(cur.qty)) end
 		local total = d and CostOf(d.rows, cur.qty)
 		if quote and quote.ready then
 			f.total:SetText(NG.Money:Text(quote.total))
