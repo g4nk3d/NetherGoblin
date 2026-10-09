@@ -1,5 +1,13 @@
 # NetherGoblin changelog
 
+## 1.4.4 - Matched auctions, today's listings on the chart
+
+A /reload is enough after updating.
+
+### Added
+- **Matched auctions.** "Check now" on the Undercuts tab also finds auctions someone has matched: listed at exactly your price, so buyers may take theirs first. They show "Matched" with how many the other seller has listed, on the Undercuts tab and the Auctions tab, and the count reads like "2 undercut, 1 matched". "Cancel next undercut" still cancels only the undercut ones; "Cancel selected" cancels a matched one.
+- **Today's listings on the chart.** For an item with fewer than three days of scans, the chart on the Buy and Sell tabs shows what is listed right now instead of a near-empty line: how many are listed at each price, with marks for the lowest price, the most listed price, the highest, and your own price (it follows the price box as you type). After three days of scans it shows the 14-day trend again.
+
 ## 1.4.3 - Quantity box like the game's
 
 A /reload is enough after updating.

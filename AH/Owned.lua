@@ -9,7 +9,8 @@
 	                              same item for less (quick, no searches)
 	  Owned:Check([cb])           exact check: each item's live listings are read (one search
 	                              per item, queued) and each auction gets .ahead (how many are
-	                              listed cheaper by others) and .undercut
+	                              listed cheaper by others), .undercut, .tied (how many others
+	                              list at exactly your price) and .matched (tied, not undercut)
 	  Owned:CanCancel(id) / Owned:CancelCost(id)
 	  Owned:Cancel(auctionID)     needs your click (the game's rule)
 	  -> "OWNED_UPDATED"(list), "UNDERCUT_CHECKED"(list), "CANCELLED"(auctionID) ]]
@@ -74,7 +75,7 @@ local function ReadOwned()
 			end
 			a.sold = a.status == SoldStatus()
 			local was = old[a.auctionID]
-			if was then a.ahead, a.undercut, a.checked = was.ahead, was.undercut, was.checked end
+			if was then a.ahead, a.undercut, a.checked, a.tied, a.matched = was.ahead, was.undercut, was.checked, was.tied, was.matched end
 			list[#list + 1] = a
 		end
 	end
@@ -147,11 +148,16 @@ function Owned:ApplyDetail(d)
 	if not d then return end
 	for _, a in ipairs(list) do
 		if not a.sold and a.itemKey and NG.Search:KeyString(a.itemKey) == d.key and a.unit then
-			local ahead = 0
+			local ahead, tied = 0, 0
 			for _, r in ipairs(d.rows) do
-				if r.unit and r.unit < a.unit and not r.own then ahead = ahead + (r.qty or 1) end
+				if r.unit and not r.own then
+					if r.unit < a.unit then ahead = ahead + (r.qty or 1)
+					elseif r.unit == a.unit then tied = tied + (r.qty or 1) end
+				end
 			end
+			-- matched: someone lists at exactly your price (buyers may take theirs first)
 			a.ahead, a.undercut, a.checked = ahead, ahead > 0, true
+			a.tied, a.matched = tied, ahead == 0 and tied > 0
 			a.lowest = d.lowest
 		end
 	end

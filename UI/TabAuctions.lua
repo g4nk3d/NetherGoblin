@@ -88,6 +88,7 @@ function TA:Build(c)
 		r.info:SetText(Status(a))
 		if a.sold then r.badge:Set(L["Sold"], "great", nil)
 		elseif a.undercut then r.badge:Set(L["Undercut"], "pricey", "down")
+		elseif a.matched then r.badge:Set(L["Matched"], "fair", nil)
 		elseif a.checked then r.badge:Set(L["Cheapest"], "good", nil)
 		else r.badge:Set(L["Listed"], "fair", nil) end
 	end)
@@ -179,9 +180,13 @@ function TA:OnShow() NG.Owned:Query() self:Show() end
 ---------------------------------------------------------------------------------------------
 local cu, ulist, usel
 
-local function Undercut()
+-- undercut first, then matched (someone at exactly your price)
+local function Undercut(onlyUndercut)
 	local out = {}
 	for _, a in ipairs(NG.Owned:List()) do if a.undercut and not a.sold then out[#out + 1] = a end end
+	if not onlyUndercut then
+		for _, a in ipairs(NG.Owned:List()) do if a.matched and not a.undercut and not a.sold then out[#out + 1] = a end end
+	end
 	return out
 end
 
@@ -205,7 +210,8 @@ function TU:Build(c)
 		if a.itemKey then base, lv = NG.Prices:KeysOfItemKey(a.itemKey) end
 		local lowest = a.lowest or NG.Prices:Lowest(lv or base)
 		r.info:SetText(lowest and string.format(L["lowest %s"], NG.Money:Text(lowest, { plain = true, short = true })) or "")
-		if a.ahead then r.badge:Set(string.format(L["%d ahead"], a.ahead), "pricey", "down")
+		if a.matched and not a.undercut then r.badge:Set(string.format(L["%d matched"], a.tied or 0), "fair", nil)
+		elseif a.ahead then r.badge:Set(string.format(L["%d ahead"], a.ahead), "pricey", "down")
 		else r.badge:Set(L["Undercut"], "pricey", "down") end
 	end)
 	ulist:SetPoint("TOPLEFT", 4, -8)
@@ -221,7 +227,7 @@ function TU:Build(c)
 	act.next = W:Button(act, L["Cancel next undercut"], 372, 52, { primary = true, size = 22 })
 	act.next:SetPoint("TOPLEFT", 14, -140)
 	act.next:SetScript("OnClick", function()
-		for _, a in ipairs(Undercut()) do
+		for _, a in ipairs(Undercut(true)) do
 			if NG.Owned:CanCancel(a.auctionID) then NG.Owned:Cancel(a.auctionID) return end
 		end
 		NG.Window:SetStatus(L["Nothing left to cancel here."], 4)
@@ -243,13 +249,16 @@ function TU:Sync()
 	ulist:SetData(l, true)
 	local checked = false
 	for _, a in ipairs(NG.Owned:List()) do if a.checked then checked = true break end end
-	cu.count:SetText(string.format(L["%d undercut"], #l))
+	local nu = #Undercut(true)
+	local nm = #l - nu
+	cu.count:SetText(nm > 0 and string.format(L["%d undercut, %d matched"], nu, nm) or string.format(L["%d undercut"], nu))
 	cu.note:SetShown(#l == 0)
 	cu.note:SetText(#NG.Owned:List() == 0 and L["You have no auctions up."] or L["Nobody is undercutting you. Enjoy it while it lasts."])
-	cu.act.next:SetEnabled(#l > 0 and NG.House:IsOpen())
+	cu.act.next:SetEnabled(nu > 0 and NG.House:IsOpen())
 	cu.act.one:SetEnabled(usel ~= nil and NG.House:IsOpen())
 	cu.act.repost:SetEnabled(usel ~= nil)
-	cu.act.foot:SetText(checked and L["Counts from the live listings (Check now)."] or L["From the last scan. Check now for exact counts."])
+	cu.act.foot:SetText((checked and L["Counts from the live listings (Check now)."] or L["From the last scan. Check now for exact counts and matched prices."])
+		.. (nm > 0 and ("\n" .. L["Matched: someone lists at exactly your price, and buyers may take theirs first. \"Cancel next\" leaves these; cancel one with \"Cancel selected\"."]) or ""))
 end
 
 function TU:OnShow() NG.Owned:CountUndercut() self:Sync() end

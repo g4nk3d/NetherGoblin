@@ -351,6 +351,7 @@ function Inspector:Fill()
 	local P = NG.Prices
 	local key = cur.key
 	f.chart:SetHistory(P:History(key))
+	if d and d.rows then f.chart:SetLive(d.rows) end   -- drawn while the history is thin
 	local mv = P:Market(key)
 	local lowest = d and d.lowest or Num(cur.row.minPrice) or P:Lowest(key)
 	SetMoneyStat(1, mv)

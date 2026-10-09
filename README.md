@@ -24,7 +24,8 @@ whole silver only (stacks of goods take copper), and the durations are 2, 8 and 
   in combat or at a low frame rate), so the game never stutters. It runs on its own when you
   open the auction house and the prices are older than half an hour (setting).
 - **Buy.** Search, the game's full category tree (Weapons > Two-Handed > Axes...), filters (exact name, usable only, rarity, level range), recent
-  searches, and for the selected item: a 14-day price trend, the usual price, the lowest now,
+  searches, and for the selected item: a 14-day price trend (until a
+  few days of scans are in, what is listed right now: lowest, most listed, highest and yours), the usual price, the lowest now,
   how many are listed and how many you carry, a deal meter, and buying. Stackable goods: pick a
   quantity, click Buyout once for the exact price, once more to buy. Gear: step through the
   auctions and Buyout (Bid too, on a client that bids). A Great / Good / Fair / Pricey badge
@@ -36,6 +37,7 @@ whole silver only (stacks of goods take copper), and the durations are 2, 8 and 
 - **Auctions and Undercuts.** Your auctions with sold ones marked, bids, time left; the ones
   someone has undercut, with "Check now" for an exact count from the live listings, and
   "Cancel next undercut" to clear them one click at a time (then repost from the Sell tab).
+  Auctions someone has matched (listed at exactly your price) are flagged too, as "Matched".
 - **Shopping lists.** Lists of things to buy, each item with a most-you-will-pay price;
   "Search this list" looks them all up and marks the ones within your price. The star on the
   Buy tab adds the current search to a list.

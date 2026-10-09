@@ -208,6 +208,7 @@ function Sell:Select(item)
 				if #d.rows == 0 then c.listNote:SetText(L["None listed. You set the price."]) c.listNote:Show() else c.listNote:Hide() end
 				local sp, sw = NG.Sell:Suggest(d, item)
 				if sp then post.price:Set(sp) cur.why = sw end
+				post.chart:SetLive(d.rows, post.price:Get())   -- drawn while the history is thin
 				Sell:Update()
 			end
 		end)
@@ -227,6 +228,7 @@ function Sell:Update(keepQty)
 	local gear = item.commodity == false and not NG:IsForever()
 	post.bidLabel:SetShown(gear) post.bid:SetShown(gear) post.bidNote:SetShown(gear)
 	local unit = post.price:Get()
+	post.chart:SetMine(unit)
 	local whyText = { undercut = L["cheapest listing minus your undercut"], yours = L["you're already the cheapest"], market = L["from its usual price (none listed)"], none = L["no price known: set one"] }
 	local why = whyText[cur.why or "none"] or ""
 	if NG.Sell:PriceStep(item) == 100 then why = why .. "  " .. L["(gear sells in whole silver here)"] end
